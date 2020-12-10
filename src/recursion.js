@@ -167,6 +167,45 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+  if (y === 0) {
+    return NaN;
+  } else if (x === y || x === -y || x === 0) {
+    return 0;
+  } else {
+    if (x > 0 && y > 0) {
+      if (x < y) {
+        return x;
+      } else if (x - y < y) {
+        return x - y;
+      } else {
+        return modulo(x - y, y);
+      }
+    } else if (x < 0 && y < 0) {
+      if (-x < -y) {
+        return x;
+      } else if (-x + y < -y) {
+        return -(-x + y);
+      } else {
+        return modulo(-x + y, -y);
+      }
+    } else if (x < 0 && y > 0) {
+      if (-x < y) {
+        return x;
+      } else if (-x - y < y) {
+        return -x - y;
+      } else {
+        return modulo(-x +-y, -y);
+      }
+    } else if (x > 0 && y < 0) {
+      if (x < -y) {
+        return x;
+      } else if (x + y < -y) {
+        return x + y;
+      } else {
+        return modulo(x + y, -y);
+      }
+    }
+  }
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
@@ -198,6 +237,41 @@ var multiply = function(x, y) {
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
 var divide = function(x, y) {
+  if (y === 0) {
+    return NaN;
+  } else if (x === 0) {
+    return 0;
+  } else if (y === 1) {
+    return x;
+  } else if (y === -1) {
+    return -x;
+  } else {
+    if (x > 0 && y > 0) {
+      if (x < y) {
+        return 0;
+      } else {
+        return 1 + divide(x - y, y);
+      }
+    } else if (x < 0 && y < 0) {
+      if (-x < -y) {
+        return 0;
+      } else {
+        return 1 + divide(-x + y, -y);
+      }
+    } else if (x < 0 && y > 0) {
+      if (-x < y) {
+        return 0;
+      } else {
+        return -1 - divide(-x - y, y);
+      }
+    } else if (x > 0 && y < 0) {
+      if (x < -y) {
+        return 0;
+      } else {
+        return -1 - divide(x + y, -y);
+      }
+    }
+  }
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
@@ -206,6 +280,17 @@ var divide = function(x, y) {
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 var gcd = function(x, y) {
+  if (x <= 0 || y <= 0) {
+    return null;
+  } else {
+    let max = Math.max(x, y);
+    let min = Math.min(x, y);
+    if (max % min === 0) {
+      return min;
+    } else {
+      return gcd(min, max % min);
+    }
+  }
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
@@ -303,6 +388,14 @@ var countOccurrence = function(array, value) {
 // 21. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+  if (array.length === 0) {
+    return [];
+  } else {
+    let result = [];
+    result.push(callback(array[0]));
+    result = result.concat(rMap(array.slice(1), callback));
+    return result;
+  }
 };
 
 // 22. Write a function that counts the number of times a key occurs in an object.
